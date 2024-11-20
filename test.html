@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Voting</title>
+  <style>
+    /* 기본 스타일 */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #444;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .vote-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .vote-option {
+      background-color: #f1f1f1;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 1em;
+      margin: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.2s ease;
+    }
+
+    .vote-option:hover {
+      background-color: #e1e1e1;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .vote-option:active {
+      background-color: #d1d1d1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #results {
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+
+    .result-item {
+      background: #fdfdfd;
+      padding: 10px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .result-label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .result-count {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-time Voting</h1>
+  <div class="vote-container">
+    <button class="vote-option" onclick="vote('optionA')">Vote for A</button>
+    <button class="vote-option" onclick="vote('optionB')">Vote for B</button>
+    <button class="vote-option" onclick="vote('optionC')">Vote for C</button>
+  </div>
+  <div id="results">
+    <div class="result-item">
+      <span class="result-label">Option A:</span> 
+      <span class="result-count" id="countA">0</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Option B:</span> 
+      <span class="result-count" id="countB">0</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Option C:</span> 
+      <span class="result-count" id="countC">0</span>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    // 실시간 투표 데이터 업데이트
+    socket.on('updateVotes', (votes) => {
+      document.getElementById('countA').textContent = votes.optionA;
+      document.getElementById('countB').textContent = votes.optionB;
+      document.getElementById('countC').textContent = votes.optionC;
+    });
+
+    // 투표 기능
+    function vote(option) {
+      socket.emit('vote', option);
+    }
+  </script>
+</body>
+</html>
