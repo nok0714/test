@@ -13,19 +13,32 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex-direction: column;
       height: 100vh;
     }
 
-    h1 {
-      color: #444;
-      font-size: 2em;
-      margin-bottom: 20px;
+    /* 헤더 바 스타일 */
+    .header {
+      width: 100%;
+      background: #ffffff;
+      padding: 15px 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
       text-align: center;
+      z-index: 1000;
     }
 
+    .header-title {
+      font-size: 1.5em;
+      color: #444;
+      margin: 0;
+    }
+
+    /* 투표 컨테이너 */
     .vote-container {
       width: 100%;
       max-width: 500px;
@@ -34,6 +47,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       text-align: center;
+      margin-top: 80px; /* 헤더 아래 공간 확보 */
     }
 
     .vote-option {
@@ -90,8 +104,8 @@
 
     /* 반응형 스타일 */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8em;
+      .header-title {
+        font-size: 1.2em;
       }
 
       .vote-container {
@@ -114,8 +128,8 @@
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5em;
+      .header-title {
+        font-size: 1em;
       }
 
       .vote-container {
@@ -139,7 +153,9 @@
   </style>
 </head>
 <body>
-  <h1>Real-time Voting</h1>
+  <div class="header">
+    <p class="header-title">Real-time Voting</p>
+  </div>
   <div class="vote-container">
     <button class="vote-option" onclick="vote('optionA')">Vote for A</button>
     <button class="vote-option" onclick="vote('optionB')">Vote for B</button>
