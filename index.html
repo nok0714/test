@@ -170,33 +170,7 @@
     <button class="vote-option" onclick="vote('optionB')">팀 2</button>
     <button class="vote-option" onclick="vote('optionC')">팀 3</button>
   </div>
-  <div id="results">
-    <div class="result-item">
-      <span class="result-label">팀 1 : </span> 
-      <span class="result-count" id="countA">0</span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">팀 2 : </span> 
-      <span class="result-count" id="countB">0</span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">팀 3 : </span> 
-      <span class="result-count" id="countC">0</span>
-    </div>
-  </div>
-
-  <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io();
-
-    // 실시간 투표 데이터 업데이트
-    socket.on('updateVotes', (votes) => {
-      document.getElementById('countA').textContent = votes.optionA;
-      document.getElementById('countB').textContent = votes.optionB;
-      document.getElementById('countC').textContent = votes.optionC;
-    });
-
-    // 투표 기능
     function vote(option) {
       socket.emit('vote', option);
     }
